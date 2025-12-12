@@ -1,13 +1,14 @@
-"use client"
+"use client";
+
 import React, { useState } from 'react';
 import { Mail, Lock, AlertCircle, CheckCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
-const  Home =() =>{
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+const LoginPage: React.FC = () => {
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [error, setError] = useState<string>('');
+  const [success, setSuccess] = useState<string>('');
   const router = useRouter();
 
   const handleLogin = () => {
@@ -15,19 +16,21 @@ const  Home =() =>{
     setSuccess('');
 
     if (!username || !password) {
-      setError('Iltimos, barcha maydonlarni to\'ldiring!');
+      setError("Iltimos, barcha maydonlarni to'ldiring!");
       return;
     }
 
     if (username === 'user1' && password === 'passwd123!') {
       setSuccess('Muvaffaqiyatli kirdingiz! Xush kelibsiz!');
-      router.push('/market')
+      setTimeout(() => {
+        router.push('/market');
+      }, 1000);
     } else {
       setError('Login yoki parol noto\'g\'ri!');
     }
   };
 
-  const handleKeyPress = (e) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       handleLogin();
     }
@@ -35,7 +38,7 @@ const  Home =() =>{
 
   return (
     <div className="flex h-screen">
-      {/* Left Section */}
+      {/* Left Section - Illustration */}
       <div className="hidden lg:flex flex-1 bg-gradient-to-br from-gray-50 to-gray-200 justify-center items-center p-10">
         <div className="max-w-md">
           <svg viewBox="0 0 400 300" className="w-full h-auto">
@@ -73,7 +76,7 @@ const  Home =() =>{
         </div>
       </div>
 
-      {/* Right Section */}
+      {/* Right Section - Login Form */}
       <div className="flex-1 bg-gradient-to-br from-blue-600 to-blue-800 flex justify-center items-center p-10 relative overflow-hidden">
         {/* Decorative Circle */}
         <div className="absolute bottom-0 right-0 w-64 h-64 border-2 border-dashed border-white/30 rounded-full -mb-32 -mr-32"></div>
@@ -81,7 +84,7 @@ const  Home =() =>{
         {/* Login Box */}
         <div className="bg-white rounded-2xl shadow-2xl p-10 w-full max-w-md relative z-10">
           <h2 className="text-3xl font-bold text-gray-800 mb-2">Hello!</h2>
-          <p className="text-gray-600 text-sm mb-8">Sign Up to Get Started</p>
+          <p className="text-gray-600 text-sm mb-8">Sign in to Get Started</p>
 
           {/* Error Message */}
           {error && (
@@ -99,15 +102,15 @@ const  Home =() =>{
             </div>
           )}
 
-          {/* Email Input */}
+          {/* Username Input */}
           <div className="mb-5 relative">
             <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
             <input
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder="Email Address"
+              onKeyDown={handleKeyDown}
+              placeholder="Username yoki Email"
               className="w-full pl-12 pr-4 py-3.5 border-2 border-gray-200 rounded-lg focus:border-blue-600 focus:outline-none transition-colors text-sm"
               autoComplete="username"
             />
@@ -120,8 +123,8 @@ const  Home =() =>{
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder="Password"
+              onKeyDown={handleKeyDown}
+              placeholder="Parol"
               className="w-full pl-12 pr-4 py-3.5 border-2 border-gray-200 rounded-lg focus:border-blue-600 focus:outline-none transition-colors text-sm"
               autoComplete="current-password"
             />
@@ -131,8 +134,8 @@ const  Home =() =>{
           <button
             onClick={handleLogin}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3.5 rounded-lg transition-all hover:-translate-y-0.5 hover:shadow-lg"
-            >
-            Login
+          >
+            Kirish
           </button>
 
           {/* Forgot Password */}
@@ -140,12 +143,12 @@ const  Home =() =>{
             href="#"
             className="block text-center mt-6 text-gray-600 text-sm hover:text-blue-600 transition-colors"
           >
-            Forgot Password?
+            Parolni unutdingizmi?
           </a>
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default Home; 
+export default LoginPage;
